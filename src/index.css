@@ -1,109 +1,95 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import 'tailwindcss';
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+/* ---------------------------------------------------------------------------
+   Design tokens — Seleta (empório de peixes & carnes)
+   Identidade "empório premium": base neutra quente (osso/bone) + tinta carvão,
+   com acento PRATA/AÇO metálico dando o toque premium do "seleta". Cada linha de
+   produto aparece do seu próprio jeito:
+     - PEIXE  -> tons de mar/aço (teal frio)
+     - CARNE  -> tons de brasa (vermelho quente)
+   Tipografia serifada (display) sobre sans do sistema — sem fontes de rede.
+   O brilho "prata" do wordmark é feito com gradiente + background-clip (nos
+   componentes), com fallback de cor sólida acessível (steel-700).
+   Expostos via @theme para virarem utilitários Tailwind (bg-mar-500, text-brasa-600…).
+--------------------------------------------------------------------------- */
+@theme {
+  /* Neutros — base de página, cards, linhas */
+  --color-bone-50: #f8f5ef;
+  --color-bone-100: #f1ece2;
+  --color-bone-200: #e6ddce;
+  --color-bone-300: #d8ccb8;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Tinta — texto e headings */
+  --color-ink-900: #17140f;
+  --color-ink-700: #35312a;
+  --color-ink-500: #6b6357;
+  --color-ink-400: #938b7c;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Prata / aço — acento premium (wordmark, hairlines, small-caps) */
+  --color-silver-200: #d9dce0;
+  --color-silver-300: #c3c7cd;
+  --color-silver-400: #a4aab2;
+  --color-steel-500: #7b828c;
+  --color-steel-700: #4b515a;
+
+  /* PEIXE — mar / aço frio */
+  --color-mar-100: #dfeaea;
+  --color-mar-400: #2f7d7d;
+  --color-mar-500: #1f5560;
+  --color-mar-600: #163f48;
+  /* CARNE — brasa / vermelho quente */
+  --color-brasa-100: #f1ddd9;
+  --color-brasa-400: #b5453d;
+  --color-brasa-500: #9e2b25;
+  --color-brasa-600: #7d1f1c;
+
+  /* Oferta / destaque de promoção — âmbar (distinto do vermelho de carne) */
+  --color-gold-400: #cda23f;
+  --color-gold-500: #b8862f;
+
+  --color-line: #e3dbcf;
+
+  --font-sans: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: Georgia, 'Times New Roman', serif;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    color-scheme: light;
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  html {
+    scroll-behavior: smooth;
   }
-}
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+  body {
+    margin: 0;
+    background: var(--color-bone-50);
+    color: var(--color-ink-700);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    color: var(--color-ink-900);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
   }
-}
-p {
-  margin: 0;
-}
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
+  ::selection {
+    background: var(--color-mar-500);
+    color: var(--color-bone-50);
+  }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  :focus-visible {
+    outline: 2px solid var(--color-steel-500);
+    outline-offset: 2px;
+  }
 }
