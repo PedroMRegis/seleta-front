@@ -10,8 +10,12 @@ interface ImagePlaceholderProps {
   label: string
   /** proporção do bloco — default '4/3' */
   aspect?: Aspect
+  /** proporção a partir de 768px, quando diferente (ex: mais baixa no celular, 4/3 no desktop) */
+  mdAspect?: Aspect
   /** cantos arredondados — default true */
   rounded?: boolean
+  /** mostra a pílula de legenda e o ícone — desligar em miniaturas — default true */
+  showCaption?: boolean
   className?: string
 }
 
@@ -20,6 +24,14 @@ const ASPECT_CLASS: Record<Aspect, string> = {
   '1/1': 'aspect-square',
   '16/9': 'aspect-[16/9]',
   '21/9': 'aspect-[21/9]',
+}
+
+/** Mesmas proporções a partir de 768px — strings literais para o Tailwind gerar as classes. */
+const MD_ASPECT_CLASS: Record<Aspect, string> = {
+  '4/3': 'md:aspect-[4/3]',
+  '1/1': 'md:aspect-square',
+  '16/9': 'md:aspect-[16/9]',
+  '21/9': 'md:aspect-[21/9]',
 }
 
 /**
@@ -32,12 +44,15 @@ export function ImagePlaceholder({
   tone,
   label,
   aspect = '4/3',
+  mdAspect,
   rounded = true,
+  showCaption = true,
   className,
 }: ImagePlaceholderProps) {
   const classes = [
     'relative overflow-hidden',
     ASPECT_CLASS[aspect],
+    mdAspect ? MD_ASPECT_CLASS[mdAspect] : '',
     rounded ? 'rounded-xl' : '',
     className ?? '',
   ]
@@ -49,20 +64,24 @@ export function ImagePlaceholder({
     // não há foto), exposto como imagem pro leitor de tela via aria-label.
     // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
     <Surface role="img" aria-label={label} className={classes} style={{ backgroundColor: tone }}>
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        viewBox="0 0 24 24"
-        className="absolute right-2 top-2 h-5 w-5 text-white/55"
-      >
-        <path
-          fill="currentColor"
-          d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1 2v10h14V7H5Zm2 8 3.5-4.5 2.5 3 2-2.5L17 15H7Z"
-        />
-      </svg>
-      <span className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded-full bg-bone-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-ink-700">
-        Foto &middot; {label}
-      </span>
+      {showCaption ? (
+        <>
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 24 24"
+            className="absolute right-2 top-2 h-5 w-5 text-white/55"
+          >
+            <path
+              fill="currentColor"
+              d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1 2v10h14V7H5Zm2 8 3.5-4.5 2.5 3 2-2.5L17 15H7Z"
+            />
+          </svg>
+          <span className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded-full bg-bone-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-ink-700">
+            Foto &middot; {label}
+          </span>
+        </>
+      ) : null}
     </Surface>
   )
 }

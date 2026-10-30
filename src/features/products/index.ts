@@ -1,5 +1,0 @@
-export { ProductCard } from './components/ProductCard'
-export { ProductGrid } from './components/ProductGrid'
-export { CategoryHero } from './components/CategoryHero'
-export { bestSellers, weeklyDeals, categories, lineHighlights, productsByCategory } from './data'
-export type { Product, Category, LineHighlight, ProductLine, CategorySlug } from './types'

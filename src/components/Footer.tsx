@@ -13,7 +13,7 @@ export function Footer() {
 
   return (
     <footer className="bg-ink-900 text-bone-100">
-      <div className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <div className="page-container page-section">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <p className="font-display text-2xl text-bone-50">Seleta</p>
@@ -27,7 +27,7 @@ export function Footer() {
               roteamento existir. Trocar por <Link> quando react-router entrar. */}
           {columns.map((column) => (
             <nav key={column.title} aria-hidden="true">
-              <p className="text-xs font-semibold uppercase tracking-widest text-bone-100/60">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-bone-100/60">
                 {column.title}
               </p>
               <ul className="mt-3 flex flex-col gap-2">
@@ -51,7 +51,9 @@ export function Footer() {
           <span className="h-3 w-56 rounded-full bg-bone-100/15" />
         </div>
 
-        <p className="mt-8 text-xs text-bone-100/50">© 2026 Seleta. Todos os direitos reservados.</p>
+        <p className="mt-8 text-xs text-bone-100/50">
+          © 2026 Seleta. Todos os direitos reservados.
+        </p>
       </div>
     </footer>
   )
